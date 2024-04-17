@@ -1,0 +1,15 @@
+Thank you for sharing the correct code! This script addresses the issues we were facing earlier and should work as intended. Let me explain the changes and improvements made in this version:
+
+The Escape-Path function is introduced to handle special characters in the directory path that might be interpreted as wildcard characters. It escapes square brackets ([ and ]) using backticks.
+The $baseDirDepth variable is introduced to store the depth of the base directory. It is calculated by splitting the escaped base directory path by \ and counting the number of elements minus one.
+The Get-ChildItem cmdlet now uses the $escapedBaseDir variable, which is the escaped version of the base directory path. This ensures that special characters in the path are properly handled.
+The Where-Object block is modified to handle both files and directories. It uses the Escape-Path function to escape the FullName property of each item. The condition $_ -is [System.IO.DirectoryInfo] is added to include directories in the output.
+Inside the ForEach-Object block, the $escapedPath variable is used to store the escaped version of the item's full path. The $depth variable is introduced to calculate the total depth of each item by adding the $baseDirDepth to the count of levels.
+The for loop is modified to iterate up to the total $depth of each item. If the current level is less than the count of levels, it assigns the corresponding level value from the $levels array. Otherwise, it assigns an empty string.
+The $selectProperties variable now directly uses the sorted $properties without the need for filtering or the @() array notation.
+The error handling and messaging remain the same as in the previous version.
+This updated script should handle special characters in the directory path correctly, include both files and directories in the output, and generate the CSV file with the desired column layout.
+
+You can run this script and provide the base directory path when prompted. It will process the directory structure, handle special characters, and generate the CSV file with the appropriate columns for each level of depth.
+
+Remember to adjust the $outputFile variable to specify the desired path and filename for the output CSV file.
